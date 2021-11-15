@@ -56,11 +56,15 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public String getAccoundId() {
+    public String getAccoundIdTransient() {
         return accoundId;
     }
 
-    public void setAccoundId(String accoundId) {
+    public void setAccoundIdTransient(String accoundIdTransient) {
+        this.accoundId = accoundId;
+    }
+
+    public Wallet(String accoundId) {
         this.accoundId = accoundId;
     }
 
