@@ -1,5 +1,6 @@
 package com.example.ewallet.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -63,6 +64,7 @@ public class Wallet {
         this.accoundId = accoundId;
     }
 
+    @JsonIgnore
     public Account getAccount() {
         return account;
     }
@@ -70,6 +72,7 @@ public class Wallet {
     public void setAccount(Account account) {
         this.account = account;
     }
+
 
     @Override
     public String toString() {

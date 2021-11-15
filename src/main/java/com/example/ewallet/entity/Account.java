@@ -1,11 +1,11 @@
 package com.example.ewallet.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "mst_account")
@@ -22,6 +22,9 @@ public class Account {
     private String address;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "account")
+    private List<Wallet> wallets = new ArrayList<>();
 
     public Account() {
     }
@@ -90,4 +93,9 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @JsonIgnore
+    public List<Wallet> getWallets() { return wallets; }
+
+    public void addWallets(List<Wallet> wallets) { this.wallets.addAll(wallets);}
 }
