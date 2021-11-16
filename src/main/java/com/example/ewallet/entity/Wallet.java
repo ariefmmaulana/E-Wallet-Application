@@ -77,6 +77,9 @@ public class Wallet {
         this.account = account;
     }
 
+    public void decreaseWallet(Integer balance) { this.balance = this.balance-balance; }
+
+    public void addWallet(Integer balance) { this.balance = this.balance+balance; }
 
     @Override
     public String toString() {
