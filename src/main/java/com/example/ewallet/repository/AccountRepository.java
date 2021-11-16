@@ -43,4 +43,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     @Modifying
     @Query(value = "DELETE FROM mst_account WHERE id = ?1", nativeQuery = true)
     void deleteAccount(String id);
+
+    @Query(value = "SELECT * FROM mst_account WHERE id =?1", nativeQuery = true)
+    Account getAccountById(String id);
 }

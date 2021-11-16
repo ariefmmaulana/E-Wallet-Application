@@ -1,7 +1,6 @@
 package com.example.ewallet.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -16,7 +15,7 @@ public class Wallet {
     private Integer balance;
 
     @Transient
-    private String accoundId;
+    private String accountIdTransient;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -25,10 +24,11 @@ public class Wallet {
     public Wallet() {
     }
 
-    public Wallet(String name, Integer balance) {
-        this.name = name;
-        this.balance = balance;
-    }
+//    public Wallet(String name, Integer balance) {
+//        this.name = name;
+//        this.balance = balance;
+//    }
+
 
     public String getId() {
         return id;
@@ -54,16 +54,12 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public String getAccoundIdTransient() {
-        return accoundId;
+    public String getAccountIdTransient() {
+        return accountIdTransient;
     }
 
-    public void setAccoundIdTransient(String accoundIdTransient) {
-        this.accoundId = accoundId;
-    }
-
-    public Wallet(String accoundId) {
-        this.accoundId = accoundId;
+    public void setAccountIdTransient(String accountIdTransient) {
+        this.accountIdTransient = accountIdTransient;
     }
 
     @JsonIgnore

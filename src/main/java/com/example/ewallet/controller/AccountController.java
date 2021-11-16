@@ -14,7 +14,7 @@ public class AccountController {
     AccountServiceDbImpl accountServiceDb;
 
     @GetMapping("/accounts")
-    public List<Account> apa(){
+    public List<Account> accounts(){
         return accountServiceDb.getAllAccount();
     }
 
@@ -31,5 +31,10 @@ public class AccountController {
     @DeleteMapping("/account")
     public void deleteAccount(@RequestParam String id) {
         accountServiceDb.deleteAccount(id);
+    }
+
+    @GetMapping("/account")
+    public Account getAccountById(@RequestParam String id) {
+        return accountServiceDb.getAccountById(id);
     }
 }
