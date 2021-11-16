@@ -13,6 +13,8 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
 
+    public Optional<Account> findAccountByUsername(String username);
+
     @Query(value = "SELECT * FROM mst_account", nativeQuery = true)
     List<Account> accounts();
 

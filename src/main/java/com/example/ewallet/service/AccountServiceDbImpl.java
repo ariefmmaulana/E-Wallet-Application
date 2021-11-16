@@ -3,6 +3,7 @@ package com.example.ewallet.service;
 import com.example.ewallet.entity.Account;
 import com.example.ewallet.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,6 +16,9 @@ public class AccountServiceDbImpl {
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public Account getAccountById(String id) {
         return accountRepository.findById(id).get();
     }
@@ -23,6 +27,7 @@ public class AccountServiceDbImpl {
     public void createAccount(Account account) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         account.setId(uuid);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.createAccount(
                 account.getId(),
                 account.getFullName(),
