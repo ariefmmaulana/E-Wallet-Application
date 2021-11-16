@@ -11,8 +11,6 @@ public class Wallet {
 
     public static final String entityName = "Wallet";
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String name;
     private Integer balance;

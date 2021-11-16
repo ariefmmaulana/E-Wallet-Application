@@ -9,8 +9,6 @@ import javax.persistence.*;
 public class Transaction {
 
     @Id
-    @GeneratedValue(generator = "uuid_generator")
-    @GenericGenerator(name = "uuid_generator", strategy = "uuid")
     private String id;
 
     @ManyToOne

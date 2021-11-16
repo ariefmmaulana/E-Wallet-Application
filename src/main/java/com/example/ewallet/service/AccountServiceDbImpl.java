@@ -5,19 +5,53 @@ import com.example.ewallet.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
+
 @Service
-public class AccountServiceDbImpl implements AccountService{
+public class AccountServiceDbImpl {
 
     @Autowired
     AccountRepository accountRepository;
 
-    @Override
     public Account getAccountById(String id) {
         return accountRepository.findById(id).get();
     }
 
-    @Override
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
+    @Transactional
+    public void createAccount(Account account) {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        account.setId(uuid);
+        accountRepository.createAccount(
+                account.getId(),
+                account.getFullName(),
+                account.getEmail(),
+                account.getAddress(),
+                account.getUsername(),
+                account.getPassword(),
+                account.getPhoneNumber()
+        );
     }
+
+    @Transactional
+    public void updateAccount(Account account) {
+        accountRepository.updateAccount(
+                account.getEmail(),
+                account.getPassword(),
+                account.getPhoneNumber(),
+                account.getId()
+        );
+    }
+
+    public List<Account> getAllAccount() {
+        return accountRepository.accounts();
+    }
+
+    @Transactional
+    public void deleteAccount(String id) {
+        accountRepository.deleteAccount(id);
+    }
+
+
 }

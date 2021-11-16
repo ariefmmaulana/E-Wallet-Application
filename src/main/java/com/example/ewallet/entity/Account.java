@@ -13,8 +13,6 @@ public class Account {
 
     public static final String entityName = "Account";
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String fullName;
     private String email;

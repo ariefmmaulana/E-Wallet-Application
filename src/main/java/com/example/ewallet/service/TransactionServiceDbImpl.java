@@ -7,36 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionServiceDbImpl implements TransactionService{
+public class TransactionServiceDbImpl {
     @Autowired
     TransactionRepository transactionRepository;
 
-    @Autowired
-    WalletService walletService;
+//    public Transaction topUp(Transaction transaction) {
+////        Wallet wallet = walletService.getWalletById(transaction.getWallet().getId());
+////        wallet.addWallet(transaction.getBalance());
+////        walletService.updateWallet(wallet);
+////        return transactionRepository.save(transaction);
+//    }
 
-    @Autowired
-    AccountService accountService;
+//    public Transaction withdraw(Transaction transaction) {
+//        Wallet wallet = walletService.getWalletById(transaction.getWallet().getId());
+//        wallet.decreaseWallet(transaction.getBalance());
+//        walletService.updateWallet(wallet);
+//        return transactionRepository.save(transaction);
+//    }
 
-    @Override
-    public Transaction topUp(Transaction transaction) {
-        Wallet wallet = walletService.getWalletById(transaction.getWallet().getId());
-        wallet.addWallet(transaction.getBalance());
-        walletService.updateWallet(wallet);
-        return transactionRepository.save(transaction);
-    }
 
-    @Override
-    public Transaction withdraw(Transaction transaction) {
-        Wallet wallet = walletService.getWalletById(transaction.getWallet().getId());
-        wallet.decreaseWallet(transaction.getBalance());
-        walletService.updateWallet(wallet);
-        return transactionRepository.save(transaction);
-    }
-
-    @Override
-    public Transaction payment(Transaction transaction) {
-        Wallet wallet = walletService.getWalletById(transaction.getWallet().getId());
-        walletService.updateWallet(wallet);
-        return transactionRepository.save(transaction);
-    }
 }
