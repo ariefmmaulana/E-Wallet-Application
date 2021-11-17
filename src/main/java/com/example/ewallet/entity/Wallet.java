@@ -3,6 +3,7 @@ package com.example.ewallet.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "mst_wallet")
@@ -24,10 +25,10 @@ public class Wallet {
     public Wallet() {
     }
 
-//    public Wallet(String name, Integer balance) {
-//        this.name = name;
-//        this.balance = balance;
-//    }
+    public Wallet(String name, Integer balance) {
+        this.name = name;
+        this.balance = balance;
+    }
 
 
     public String getId() {
@@ -83,5 +84,18 @@ public class Wallet {
                 ", balance=" + balance +
                 ", account=" + account +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Wallet wallet = (Wallet) o;
+        return Objects.equals(id, wallet.id) && Objects.equals(name, wallet.name) && Objects.equals(balance, wallet.balance) && Objects.equals(accountIdTransient, wallet.accountIdTransient) && Objects.equals(account, wallet.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, balance, accountIdTransient, account);
     }
 }

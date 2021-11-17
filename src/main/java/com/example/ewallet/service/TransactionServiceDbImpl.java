@@ -6,7 +6,9 @@ import com.example.ewallet.repository.AccountRepository;
 import com.example.ewallet.repository.TransactionRepository;
 import com.example.ewallet.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
@@ -50,6 +52,9 @@ public class TransactionServiceDbImpl {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         transaction.setId(uuid);
         Wallet wallet = walletServiceDb.getWalletById(transaction.getWallet().getId());
+        if (wallet.getBalance()<transaction.getBalance()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Your balance is not enough");
+        }
         wallet.decreaseWallet(transaction.getBalance());
         walletServiceDb.updateWallet(wallet);
         transactionRepository.withdrawWallet(

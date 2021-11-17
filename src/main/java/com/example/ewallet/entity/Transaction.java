@@ -3,6 +3,7 @@ package com.example.ewallet.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tx_transaction")
@@ -28,6 +29,11 @@ public class Transaction {
     public Transaction(Account account, Wallet wallet, String transactionType, Integer balance) {
         this.account = account;
         this.wallet = wallet;
+        this.transactionType = transactionType;
+        this.balance = balance;
+    }
+
+    public Transaction(String transactionType, Integer balance) {
         this.transactionType = transactionType;
         this.balance = balance;
     }
@@ -70,5 +76,18 @@ public class Transaction {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(id, that.id) && Objects.equals(account, that.account) && Objects.equals(wallet, that.wallet) && Objects.equals(transactionType, that.transactionType) && Objects.equals(balance, that.balance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, account, wallet, transactionType, balance);
     }
 }

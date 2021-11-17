@@ -6,11 +6,13 @@ import com.example.ewallet.security.JwtTokenUtil;
 import com.example.ewallet.service.AccountServiceDbImpl;
 import com.example.ewallet.service.UserDetailServiceDbImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +63,9 @@ public class AccountController {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(userCredentials.getUsername(), userCredentials.getPassword());
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
+        if (!authentication.isAuthenticated()){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username atau Password Salah");
+        }
         UserDetails userDetails = userDetailServiceDb.loadUserByUsername(userCredentials.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
 

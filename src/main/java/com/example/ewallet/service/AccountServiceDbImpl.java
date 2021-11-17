@@ -3,8 +3,10 @@ package com.example.ewallet.service;
 import com.example.ewallet.entity.Account;
 import com.example.ewallet.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,6 +22,9 @@ public class AccountServiceDbImpl {
     PasswordEncoder passwordEncoder;
 
     public Account getAccountById(String id) {
+        if (!accountRepository.findById(id).isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id Account Not Found");
+        }
         return accountRepository.findById(id).get();
     }
 
@@ -41,22 +46,30 @@ public class AccountServiceDbImpl {
 
     @Transactional
     public void updateAccount(Account account) {
-        accountRepository.updateAccount(
-                account.getEmail(),
-                account.getPassword(),
-                account.getPhoneNumber(),
-                account.getId()
-        );
-    }
+        boolean existAccount = getAllAccount().stream().anyMatch(t -> t.equals(account));
+            if (existAccount){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id Account Not Found");
+            } else {
+                accountRepository.updateAccount(
+                        account.getEmail(),
+                        account.getPassword(),
+                        account.getPhoneNumber(),
+                        account.getId()
+                );
+            }
+        }
+
 
     public List<Account> getAllAccount() {
-        return accountRepository.accounts();
+        return accountRepository.getAllAccounts();
     }
 
     @Transactional
     public void deleteAccount(String id) {
         accountRepository.deleteAccount(id);
     }
+
+
 
 
 }

@@ -5,7 +5,9 @@ import com.example.ewallet.entity.Wallet;
 import com.example.ewallet.repository.AccountRepository;
 import com.example.ewallet.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -53,6 +55,9 @@ public class WalletServiceDbImpl{
     }
 
     public Wallet getWalletById(String id) {
+        if (!walletRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id Wallet Not Found");
+        }
         return walletRepository.findById(id).get();
     }
 }

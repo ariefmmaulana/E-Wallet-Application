@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "mst_account")
@@ -96,4 +97,17 @@ public class Account {
     public List<Wallet> getWallets() { return wallets; }
 
     public void addWallets(List<Wallet> wallets) { this.wallets.addAll(wallets);}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) && Objects.equals(fullName, account.fullName) && Objects.equals(email, account.email) && Objects.equals(phoneNumber, account.phoneNumber) && Objects.equals(address, account.address) && Objects.equals(username, account.username) && Objects.equals(password, account.password) && Objects.equals(wallets, account.wallets);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName, email, phoneNumber, address, username, password, wallets);
+    }
 }

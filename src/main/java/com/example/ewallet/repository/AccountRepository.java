@@ -16,7 +16,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     public Optional<Account> findAccountByUsername(String username);
 
     @Query(value = "SELECT * FROM mst_account", nativeQuery = true)
-    List<Account> accounts();
+    List<Account> getAllAccounts();
 
     @Modifying
     @Query(value = "INSERT INTO mst_account(id, full_name, email, address, username, password, phone_number) " +
@@ -48,4 +48,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "SELECT * FROM mst_account WHERE id =?1", nativeQuery = true)
     Account getAccountById(String id);
+
+    @Modifying
+    @Query(value = "DELETE FROM mst_account", nativeQuery = true)
+    void deleteAll();
 }
